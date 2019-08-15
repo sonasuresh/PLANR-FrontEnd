@@ -1,0 +1,33 @@
+.bg-violet {
+    background-color: #8c14fc;
+}
+
+.btn-violet {
+    background-color: #8c14fc;
+}
+
+.btn-outline-violet {
+    border: 1px solid #8c14fc;
+}
+
+.pill-button {
+    border-radius: 5rem;
+}
+
+.text-violet{
+    color:#8c14fc;
+}
+
+.clickable-icon{
+    cursor: pointer;
+}
+
+.navbar-bg {
+    background: #FC466B;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3F5EFB, #FC466B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+textarea {
+    resize: vertical !important;
+}
