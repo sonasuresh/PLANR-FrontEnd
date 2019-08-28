@@ -2,28 +2,28 @@ import React from 'react'
 
 function getIconAndColor(priority) {
 	let value = {
-		icon: "",
-		color: ""
+		icon: '',
+		color: ''
 	}
 	switch (priority) {
 		case 'Low':
-			value.icon = "fa fa-arrow-down"
-			value.color = "text-success"
-			break;
+			value.icon = 'fa fa-arrow-down'
+			value.color = 'text-success'
+			break
 		case 'Medium':
-			value.icon = "fa fa-minus"
-			value.color = "text-warning"
-			break;
+			value.icon = 'fa fa-minus'
+			value.color = 'text-warning'
+			break
 		case 'High':
-			value.icon = "fa fa-arrow-up"
-			value.color = "text-danger"
-			break;
+			value.icon = 'fa fa-arrow-up'
+			value.color = 'text-danger'
+			break
 		case 'Critical':
-			value.icon = " fa fa-exclamation-triangle"
-			value.color = "text-danger"
-			break;
+			value.icon = ' fa fa-exclamation-triangle'
+			value.color = 'text-danger'
+			break
 		default:
-			break;
+			break
 	}
 	return value
 }
@@ -31,15 +31,25 @@ function getIconAndColor(priority) {
 function IssueCard(props) {
 	const iconAndColor = getIconAndColor(props.priority)
 	return (
-		<div className="card shadow">
+		<div className="card pr-5 pl-5 pb-3 shadow">
 			<div className="card-body">
-				<h4 className="card-title">
-					<span className={iconAndColor.color} >
-						<i className={iconAndColor.icon + " mr-2"} />
+				<h4
+					className="card-title"
+					role="button"
+					data-toggle="collapse"
+					data-target={`#collapseDescription${props.issueId}`}>
+					<span className={iconAndColor.color}>
+						<i className={iconAndColor.icon + ' mr-4'} />
 						{props.title}
 					</span>
 					<i
-						className="fa text-violet fa-edit float-right clickable-icon"
+						className="fa text-danger fa-trash float-right clickable-icon"
+						onClick={() => {
+							props.handleDeleteIssue(props.issueId)
+						}}
+					/>
+					<i
+						className="fa text-violet fa-edit float-right clickable-icon mr-5"
 						data-toggle="modal"
 						data-target="#issueUpdateModal"
 						onClick={() => {
@@ -47,13 +57,14 @@ function IssueCard(props) {
 						}}
 					/>
 				</h4>
-				<h6 className="card-subtitle mb-2 text-muted">Description</h6>
-				<p className="card-text">{props.description}</p>
-				<button
-					className="btn btn-violet"
-					onClick={() => props.handleDeleteIssue(props.issueId)}>
-					Delete Issue
-				</button>
+				<div
+					class="collapse m-5"
+					id={`collapseDescription${props.issueId}`}>
+					<span className="card-subtitle mb-2 text-muted">
+						<h5>Description</h5>
+					</span>
+					<p className="card-text">{props.description}</p>
+				</div>
 			</div>
 		</div>
 	)

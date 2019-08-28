@@ -6,8 +6,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import AddIssueButton from '../components/issues/AddIssueButton'
 import AddIssueModal from '../components/issues/AddIssueModal'
 
-
-
 export class IssueView extends Component {
 	constructor(props) {
 		super(props)
@@ -56,7 +54,10 @@ export class IssueView extends Component {
 	onConfirm = async () => {
 		try {
 			await callAPI('post', '/issues', {
-				data: { ...this.state.selectedIssue, p_id: this.props.match.params.projectId }
+				data: {
+					...this.state.selectedIssue,
+					p_id: this.props.match.params.projectId
+				}
 			})
 			toast.success('Issue Created')
 
@@ -69,9 +70,7 @@ export class IssueView extends Component {
 		if (this.state.issues.length === 0) {
 			return (
 				<span>
-					<h3 className="d-1 text-center text-danger">
-						No Issues!
-					</h3>
+					<h3 className="d-1 text-center text-danger">No Issues!</h3>
 				</span>
 			)
 		} else {
@@ -122,8 +121,6 @@ export class IssueView extends Component {
 		this.props.history.goBack()
 	}
 	render() {
-		const { state } = this
-		const { selectedIssue } = state
 		return (
 			<div className="m-5">
 				<ToastContainer />
@@ -147,8 +144,6 @@ export class IssueView extends Component {
 					handleDescriptionChange={this.handleDescriptionChange}
 					handlePriorityChange={this.handlePriorityChange}
 				/>
-
-
 
 				{this._renderIssueCards()}
 			</div>
