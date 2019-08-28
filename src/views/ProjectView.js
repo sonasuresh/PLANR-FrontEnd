@@ -115,6 +115,8 @@ export class ProjectView extends Component {
 				data: this.state.selectedProject
 			})
 			toast.success('Project Created')
+
+			this.getAllProjects()
 		} catch (error) {
 			toast.error('Error in Creating Project')
 		}

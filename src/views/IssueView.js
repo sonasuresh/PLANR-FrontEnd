@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import IssueCard from '../components/issues/Card'
 import callAPI from '../lib/axios'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 
 import AddIssueButton from '../components/issues/AddIssueButton'
+import AddIssueModal from '../components/issues/AddIssueModal'
+
+
 
 export class IssueView extends Component {
 	constructor(props) {
@@ -11,7 +14,9 @@ export class IssueView extends Component {
 		this.state = {
 			issues: [],
 			isIssueSelected: false,
-			selectedIssue: {}
+			selectedIssue: {
+				priority: 'Low'
+			}
 		}
 	}
 
@@ -48,13 +53,24 @@ export class IssueView extends Component {
 		currentState.selectedIssue = filteredIssues[0]
 		this.setState(currentState)
 	}
+	onConfirm = async () => {
+		try {
+			await callAPI('post', '/issues', {
+				data: { ...this.state.selectedIssue, p_id: this.props.match.params.projectId }
+			})
+			toast.success('Issue Created')
 
+			this.getAllIssues()
+		} catch (error) {
+			toast.error('Error in Creating Issue')
+		}
+	}
 	_renderIssueCards = () => {
 		if (this.state.issues.length === 0) {
 			return (
 				<span>
 					<h3 className="d-1 text-center text-danger">
-						Oops! No Issues!
+						No Issues!
 					</h3>
 				</span>
 			)
@@ -64,6 +80,7 @@ export class IssueView extends Component {
 					issueId={issue.i_id}
 					title={issue.i_title}
 					description={issue.i_desc}
+					priority={issue.priority}
 					handleDeleteIssue={this.handleDeleteIssue}
 				/>
 			))
@@ -77,6 +94,11 @@ export class IssueView extends Component {
 	handleDescriptionChange = (e) => {
 		const { state: currentState } = this
 		currentState.selectedIssue.i_desc = e.target.value
+		this.setState(currentState)
+	}
+	handlePriorityChange = (e) => {
+		const { state: currentState } = this
+		currentState.selectedIssue.priority = e.target.value
 		this.setState(currentState)
 	}
 
@@ -115,133 +137,19 @@ export class IssueView extends Component {
 					</span>
 					<AddIssueButton
 						data-toggle="modal"
-						data-target="#addissuemodal"
+						data-target="#addissueModal"
 					/>
 				</div>
-				<div
-					className="modal fade"
-					id="issueUpdateModal"
-					tabIndex="-1"
-					role="dialog"
-					aria-labelledby="IssueUpdateModal"
-					aria-hidden="true">
-					<div className="modal-dialog" role="document">
-						<div className="modal-content">
-							<div className="modal-header">
-								<h5
-									className="modal-title"
-									id="issueUpdateModalLabel">
-									Edit Project Details
-								</h5>
-								<button
-									type="button"
-									className="close"
-									data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div className="modal-body">
-								<div className="form-group">
-									<label className="ml-2">Title</label>
-									<input
-										type="text"
-										value={selectedIssue.i_title}
-										onChange={this.handleTitleChange}
-										className="form-control"
-										placeholder="Enter Title of the Project"
-									/>
-								</div>
-								<div className="form-group">
-									<label className="ml-2">Description</label>
-									<textarea
-										className="form-control"
-										value={selectedIssue.i_desc}
-										onChange={this.handleDescriptionChange}
-										placeholder="Enter Description of the Project"
-									/>
-								</div>
-							</div>
-							<div className="modal-footer">
-								<button
-									type="button"
-									className="btn btn-secondary"
-									data-dismiss="modal"
-									onClick={this.handleCancel}>
-									Cancel
-								</button>
-								<button
-									type="button"
-									className="btn btn-primary"
-									onClick={this.handleUpdate}>
-									Update
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div
-					className="modal fade"
-					id="addissuemodal"
-					tabIndex="-1"
-					role="dialog"
-					aria-labelledby="addissuemodaltitle"
-					aria-hidden="true">
-					<div className="modal-dialog" role="document">
-						<div className="modal-content">
-							<div className="modal-header">
-								<h5
-									className="modal-title"
-									id="addissuemodaltitle">
-									New Issue
-								</h5>
-								<button
-									type="button"
-									className="close"
-									data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div className="modal-body">
-								<div className="form-group">
-									<label className="ml-2">Title</label>
-									<input
-										type="text"
-										value={selectedIssue.i_title}
-										onChange={this.handleTitleChange}
-										className="form-control"
-										placeholder="Enter Title of the Project"
-									/>
-								</div>
-								<div className="form-group">
-									<label className="ml-2">Description</label>
-									<textarea
-										className="form-control"
-										value={selectedIssue.i_desc}
-										onChange={this.handleDescriptionChange}
-										placeholder="Enter Description of the Project"
-									/>
-								</div>
-							</div>
-							<div className="modal-footer">
-								<button
-									type="button"
-									className="btn btn-secondary"
-									data-dismiss="modal"
-									onClick={this.handleCancel}>
-									Cancel
-								</button>
-								<button
-									type="button"
-									className="btn btn-primary"
-									onClick={this.handleUpdate}>
-									Update
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<AddIssueModal
+					onConfirm={this.onConfirm}
+					onCancel={this.handleCancel}
+					handleTitleChange={this.handleTitleChange}
+					handleDescriptionChange={this.handleDescriptionChange}
+					handlePriorityChange={this.handlePriorityChange}
+				/>
+
+
+
 				{this._renderIssueCards()}
 			</div>
 		)
