@@ -71,6 +71,12 @@ export class IssueView extends Component {
 			return (
 				<span>
 					<h3 className="d-1 text-center text-danger">No Issues!</h3>
+					<div className="text-center">
+						<AddIssueButton
+							data-toggle="modal"
+							data-target="#addissueModal"
+						/>
+					</div>
 				</span>
 			)
 		} else {
@@ -117,6 +123,17 @@ export class IssueView extends Component {
 		this.getAllIssues()
 	}
 
+	_renderAddIssueButton = () => {
+		if (this.state.issues.length !== 0) {
+			return (
+				<AddIssueButton
+					data-toggle="modal"
+					data-target="#addissueModal"
+				/>
+			)
+		}
+	}
+
 	handleGoBack = () => {
 		this.props.history.goBack()
 	}
@@ -132,10 +149,7 @@ export class IssueView extends Component {
 						/>
 						Current Issues
 					</span>
-					<AddIssueButton
-						data-toggle="modal"
-						data-target="#addissueModal"
-					/>
+					{this._renderAddIssueButton()}
 				</div>
 				<AddIssueModal
 					onConfirm={this.onConfirm}
