@@ -35,7 +35,7 @@ function IssueCard(props) {
 			<div className="card-body">
 				<h4 className="card-title">
 					<span
-						className={`${iconAndColor.color} w-100`}
+						className={`${iconAndColor.color} clickable-icon`}
 						role="button"
 						data-toggle="collapse"
 						data-target={`#collapseDescription${props.issueId}`}>
