@@ -145,7 +145,7 @@ export class ProjectView extends Component {
 						handleDescriptionChange={this.handleDescriptionChange}
 					/>
 					<div
-						class="modal fade"
+						className="modal fade"
 						id="projectUpdateModal"
 						tabIndex="-1"
 						role="dialog"
@@ -161,14 +161,14 @@ export class ProjectView extends Component {
 									</h5>
 									<button
 										type="button"
-										class="close"
+										className="close"
 										data-dismiss="modal"
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<div class="modal-body">
-									<div class="form-group">
+								<div className="modal-body">
+									<div className="form-group">
 										<label className="ml-2">Title</label>
 										<input
 											type="text"
@@ -178,7 +178,7 @@ export class ProjectView extends Component {
 											placeholder="Enter Title of the Project"
 										/>
 									</div>
-									<div class="form-group">
+									<div className="form-group">
 										<label className="ml-2">
 											Description
 										</label>
@@ -192,17 +192,17 @@ export class ProjectView extends Component {
 										/>
 									</div>
 								</div>
-								<div class="modal-footer">
+								<div className="modal-footer">
 									<button
 										type="button"
-										class="btn btn-secondary"
+										className="btn btn-secondary"
 										data-dismiss="modal"
 										onClick={this.handleCancel}>
 										Cancel
 									</button>
 									<button
 										type="button"
-										class="btn btn-primary"
+										className="btn btn-primary"
 										onClick={this.handleUpdate}>
 										Update
 									</button>

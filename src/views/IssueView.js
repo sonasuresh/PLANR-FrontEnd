@@ -67,6 +67,22 @@ export class IssueView extends Component {
 			toast.error('Error in Creating Issue')
 		}
 	}
+
+	handleStatusChange = async (issueId, status) => {
+		try {
+			await callAPI('put', '/issues/', {
+				data: {
+					i_id: issueId,
+					status
+				}
+			})
+			alert('Status Changed')
+			this.getAllIssues()
+		} catch (error) {
+			alert('An Error Occured')
+		}
+	}
+
 	_renderIssueCards = () => {
 		if (this.state.issues.length === 0) {
 			return (
@@ -81,13 +97,17 @@ export class IssueView extends Component {
 				</span>
 			)
 		} else {
-			return this.state.issues.map((issue) => (
+			return this.state.issues.map((issue, idx) => (
 				<IssueCard
+					key={idx}
 					issueId={issue.i_id}
 					title={issue.i_title}
 					description={issue.i_desc}
+					status={issue.status}
 					priority={issue.priority}
 					handleDeleteIssue={this.handleDeleteIssue}
+					handleUpdateIssueClick={this.handleUpdateIssueClick}
+					handleStatusChange={this.handleStatusChange}
 				/>
 			))
 		}
@@ -139,6 +159,11 @@ export class IssueView extends Component {
 		this.props.history.goBack()
 	}
 	render() {
+		const totalIssues = this.state.issues.length
+		const completedIssues = this.state.issues.filter((value) => {
+			return value.status === 'Completed'
+		}).length
+		const percentage = (completedIssues / totalIssues) * 100
 		return (
 			<div>
 				<NavBar />
@@ -153,8 +178,19 @@ export class IssueView extends Component {
 							/>
 							Current Issues
 						</span>
+
 						{this._renderAddIssueButton()}
 					</div>
+					Progress
+					<span class="progress w-100 mb-5">
+						<span
+							className="progress-bar bg-success"
+							role="progressbar"
+							style={{ width: `${percentage}%` }}
+							aria-valuenow="25"
+							aria-valuemin="0"
+							aria-valuemax="100"></span>
+					</span>
 					<AddIssueModal
 						onConfirm={this.onConfirm}
 						onCancel={this.handleCancel}
@@ -162,7 +198,6 @@ export class IssueView extends Component {
 						handleDescriptionChange={this.handleDescriptionChange}
 						handlePriorityChange={this.handlePriorityChange}
 					/>
-
 					{this._renderIssueCards()}
 				</div>
 			</div>

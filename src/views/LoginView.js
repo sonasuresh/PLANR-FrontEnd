@@ -9,6 +9,9 @@ export default class LoginView extends Component {
 			username: '',
 			password: ''
 		}
+		if (localStorage.getItem('token')) {
+			window.location = '/#/'
+		}
 	}
 
 	handleLoginClick = async () => {

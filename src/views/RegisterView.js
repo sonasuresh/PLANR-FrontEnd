@@ -17,7 +17,7 @@ export default class RegisterView extends Component {
 			alert('Cannot proceed without username and/or password')
 		} else {
 			try {
-				const response = await callAPI('post', '/users', {
+				await callAPI('post', '/users', {
 					data: {
 						userId: username,
 						password
