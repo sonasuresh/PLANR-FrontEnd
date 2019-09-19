@@ -76,7 +76,6 @@ export class IssueView extends Component {
 					status
 				}
 			})
-			alert('Status Changed')
 			this.getAllIssues()
 		} catch (error) {
 			alert('An Error Occured')
