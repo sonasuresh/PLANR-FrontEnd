@@ -151,11 +151,11 @@ export class ProjectView extends Component {
 						role="dialog"
 						aria-labelledby="projectUpdateModal"
 						aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
+						<div className="modal-dialog" role="document">
+							<div className="modal-content">
+								<div className="modal-header">
 									<h5
-										class="modal-title"
+										className="modal-title"
 										id="projectUpdateModalLabel">
 										Edit Project Details
 									</h5>

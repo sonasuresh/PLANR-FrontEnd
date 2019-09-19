@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import callAPI from '../lib/axios'
 
-export default class LoginView extends Component {
+export default class RegisterView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -11,21 +11,21 @@ export default class LoginView extends Component {
 		}
 	}
 
-	handleLoginClick = async () => {
+	handleRegisterClick = async () => {
 		const { username, password } = this.state
 		if (username === '' && password === '') {
 			alert('Cannot proceed without username and/or password')
 		} else {
 			try {
-				const response = await callAPI('post', '/users/login', {
+				const response = await callAPI('post', '/users', {
 					data: {
-						username,
+						userId: username,
 						password
 					}
 				})
-				localStorage.setItem('token', response.data)
-				window.location = '/#/'
+				alert('New User created')
 			} catch (error) {
+				alert('An error occured')
 				console.log('Error')
 			}
 		}
@@ -35,7 +35,7 @@ export default class LoginView extends Component {
 		return (
 			<div className="pt-5 login-bg text-white h-100">
 				<div className="text-center">
-					<div className="display-4">Welcome to </div>
+					<div className="display-4">Register with </div>
 					<div className="display-1"> Planr.</div>
 					<h3>An One stop solution to manage your projects</h3>
 					<div style={{ fontSize: 20 }} className="mt-5">
@@ -67,11 +67,11 @@ export default class LoginView extends Component {
 							style={{ marginLeft: 600, marginRight: 600 }}>
 							<button
 								className="btn btn-primary w-100"
-								onClick={this.handleLoginClick}>
-								Login
+								onClick={this.handleRegisterClick}>
+								Sign Up
 							</button>
-							<Link to="/register" className="text-white">
-								Dont Have an Account? Sign Up
+							<Link to="/login" className="text-white">
+								Login
 							</Link>
 						</div>
 					</div>
