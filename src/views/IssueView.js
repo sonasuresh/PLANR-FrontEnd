@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 import AddIssueButton from '../components/issues/AddIssueButton'
 import AddIssueModal from '../components/issues/AddIssueModal'
+import NavBar from '../components/NavBar'
 
 export class IssueView extends Component {
 	constructor(props) {
@@ -139,27 +140,31 @@ export class IssueView extends Component {
 	}
 	render() {
 		return (
-			<div className="m-5">
-				<ToastContainer />
-				<div className="d-flex justify-content-between align-items-center mt-5 mb-5">
-					<span className="h1">
-						<i
-							className="fa fa-chevron-circle-left text-violet clickable-icon pill-button shadow mr-4"
-							onClick={this.handleGoBack}
-						/>
-						Current Issues
-					</span>
-					{this._renderAddIssueButton()}
-				</div>
-				<AddIssueModal
-					onConfirm={this.onConfirm}
-					onCancel={this.handleCancel}
-					handleTitleChange={this.handleTitleChange}
-					handleDescriptionChange={this.handleDescriptionChange}
-					handlePriorityChange={this.handlePriorityChange}
-				/>
+			<div>
+				<NavBar />
 
-				{this._renderIssueCards()}
+				<div className="m-5">
+					<ToastContainer />
+					<div className="d-flex justify-content-between align-items-center mt-5 mb-5">
+						<span className="h1">
+							<i
+								className="fa fa-chevron-circle-left text-violet clickable-icon pill-button shadow mr-4"
+								onClick={this.handleGoBack}
+							/>
+							Current Issues
+						</span>
+						{this._renderAddIssueButton()}
+					</div>
+					<AddIssueModal
+						onConfirm={this.onConfirm}
+						onCancel={this.handleCancel}
+						handleTitleChange={this.handleTitleChange}
+						handleDescriptionChange={this.handleDescriptionChange}
+						handlePriorityChange={this.handlePriorityChange}
+					/>
+
+					{this._renderIssueCards()}
+				</div>
 			</div>
 		)
 	}

@@ -5,6 +5,7 @@ import ProjectCard from '../components/projects/Card'
 import callAPI from '../lib/axios'
 import AddProjectButton from '../components/projects/AddProjectButton'
 import AddProjectModal from '../components/projects/AddProjectModal'
+import NavBar from '../components/NavBar'
 
 export class ProjectView extends Component {
 	constructor() {
@@ -126,85 +127,92 @@ export class ProjectView extends Component {
 		const { state } = this
 		const { selectedProject } = state
 		return (
-			<div className="m-5">
-				<ToastContainer />
-				<div className="d-flex justify-content-between align-items-center mt-5 mb-5">
-					<h1>Current Projects</h1>
-					<AddProjectButton
-						data-toggle="modal"
-						data-target="#addProjectModal"
+			<div>
+				<NavBar />
+				<div className="m-5">
+					<ToastContainer />
+					<div className="d-flex justify-content-between align-items-center mt-5 mb-5">
+						<h1>Current Projects</h1>
+						<AddProjectButton
+							data-toggle="modal"
+							data-target="#addProjectModal"
+						/>
+					</div>
+					<AddProjectModal
+						onConfirm={this.onConfirm}
+						onCancel={this.handleCancel}
+						handleTitleChange={this.handleTitleChange}
+						handleDescriptionChange={this.handleDescriptionChange}
 					/>
-				</div>
-				<AddProjectModal
-					onConfirm={this.onConfirm}
-					onCancel={this.handleCancel}
-					handleTitleChange={this.handleTitleChange}
-					handleDescriptionChange={this.handleDescriptionChange}
-				/>
-				<div
-					class="modal fade"
-					id="projectUpdateModal"
-					tabIndex="-1"
-					role="dialog"
-					aria-labelledby="projectUpdateModal"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5
-									class="modal-title"
-									id="projectUpdateModalLabel">
-									Edit Project Details
-								</h5>
-								<button
-									type="button"
-									class="close"
-									data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<label className="ml-2">Title</label>
-									<input
-										type="text"
-										value={selectedProject.p_name}
-										onChange={this.handleTitleChange}
-										className="form-control"
-										placeholder="Enter Title of the Project"
-									/>
+					<div
+						class="modal fade"
+						id="projectUpdateModal"
+						tabIndex="-1"
+						role="dialog"
+						aria-labelledby="projectUpdateModal"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5
+										class="modal-title"
+										id="projectUpdateModalLabel">
+										Edit Project Details
+									</h5>
+									<button
+										type="button"
+										class="close"
+										data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
-								<div class="form-group">
-									<label className="ml-2">Description</label>
-									<textarea
-										className="form-control"
-										value={selectedProject.p_desc}
-										onChange={this.handleDescriptionChange}
-										placeholder="Enter Description of the Project"
-									/>
+								<div class="modal-body">
+									<div class="form-group">
+										<label className="ml-2">Title</label>
+										<input
+											type="text"
+											value={selectedProject.p_name}
+											onChange={this.handleTitleChange}
+											className="form-control"
+											placeholder="Enter Title of the Project"
+										/>
+									</div>
+									<div class="form-group">
+										<label className="ml-2">
+											Description
+										</label>
+										<textarea
+											className="form-control"
+											value={selectedProject.p_desc}
+											onChange={
+												this.handleDescriptionChange
+											}
+											placeholder="Enter Description of the Project"
+										/>
+									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button
-									type="button"
-									class="btn btn-secondary"
-									data-dismiss="modal"
-									onClick={this.handleCancel}>
-									Cancel
-								</button>
-								<button
-									type="button"
-									class="btn btn-primary"
-									onClick={this.handleUpdate}>
-									Update
-								</button>
+								<div class="modal-footer">
+									<button
+										type="button"
+										class="btn btn-secondary"
+										data-dismiss="modal"
+										onClick={this.handleCancel}>
+										Cancel
+									</button>
+									<button
+										type="button"
+										class="btn btn-primary"
+										onClick={this.handleUpdate}>
+										Update
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				{this._renderProjectCards()}
+					{this._renderProjectCards()}
+				</div>
 			</div>
 		)
 	}

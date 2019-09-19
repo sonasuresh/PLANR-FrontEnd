@@ -21,7 +21,20 @@ function NavBar(props) {
 				<ul className="navbar-nav mr-auto" />
 				<ul className="navbar-nav mt-2 mt-lg-0 ">
 					<li className="nav-item active">
-						<Link to="/projects">Projects</Link>
+						<button className="btn btn-link text-white">
+							<Link to="/projects">Projects</Link>
+						</button>
+					</li>
+					<li className="nav-item ml-4 active">
+						<button
+							className="btn btn-link text-white"
+							onclick={() => {
+								console.log('Helo')
+								localStorage.clear()
+								window.location = '/#/login'
+							}}>
+							Logout
+						</button>
 					</li>
 				</ul>
 			</div>
