@@ -8,6 +8,7 @@ function ProjectCard(props) {
 				<h4 className="card-title font-weight-bold">
 					{props.title}
 					<i
+
 						className="fa text-violet fa-edit float-right clickable-icon"
 						data-toggle="modal"
 						data-target="#projectUpdateModal"
